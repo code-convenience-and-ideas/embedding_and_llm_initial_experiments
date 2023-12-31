@@ -1,0 +1,18 @@
+# Describes a series of prompt templates to use for LLM response generation
+---
+templates:
+  - name: summary_of_reports
+    button_label: Report Summary
+    prompt: Which providers have been asked to write a medical report for us? Please list them all.
+  - name: "empty"
+    button_label: "Clear prompt"
+    prompt: ""
+  - name: summarise_diagnoses
+    button_label: Diagnosis Query
+    prompt: Please identify and list all of the medical diagnoses for the claim.
+  - name: referral_search
+    button_label: Treatment Query
+    prompt: Please summarise and list the treatment that has occurred on the claim.
+  - name: mental_health_search
+    button_label: Mental Health mentions
+    prompt: What medical referrals have occurred to other providers?

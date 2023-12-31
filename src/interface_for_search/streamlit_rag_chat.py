@@ -7,6 +7,11 @@ import os
 from pathlib import Path
 import base64
 import mimetypes
+from config_handling.prompt_template_loader import load_yaml_prompt_templates
+
+# Load in the yaml file
+path_to_yaml_templates = r"C:\Users\Alex\Google Drive\projects\llama2_retrieval_augmented_generation\data\prompt_templates\default_prompts.yml"
+yaml_template_collection = load_yaml_prompt_templates(path_to_yaml_templates)
 
 # Add markdown as a mimetype before use
 mimetypes.add_type('text/plain', '.md')
@@ -16,12 +21,7 @@ empty_prompt_name = "empty"
 empty_prompt_text = ""
 
 prompt_templates = defaultdict(lambda: "", **{
-    empty_prompt_name: empty_prompt_text,
-    "summary_of_reports": "Which providers have been asked to write a medical report for us? Please list them all.",
-    "summarise_diagnoses": "Please identify and list all of the medical diagnoses for the claim.",
-    "summarise_treatment": "Please summarise and list the treatment that has occurred on the claim.",
-    "referral_search": "What medical referrals have occurred to other providers?",
-    "mental_health_search": "Has there been any mentions of mental health issues for the claimant?"
+    yaml_template_collection.create_template_lookup()
 })
 
 # Setup the title + page config
@@ -70,18 +70,7 @@ uploaded_file = st.file_uploader("Upload an article", type=("txt", "md"))
 
 # Add a dropdown list of prompt templates
 ## Options for prompt templates - select dropdown menu
-prompt_template_buttons = [
-    {"label": "Report Summary",
-     "value": "summary_of_reports"},
-    {"label": "Diagnosis Query",
-     "value": "summarise_diagnoses"},
-    {"label": "Treatment Query",
-     "value": "summarise_treatment"},
-    {"label": "Find referrals",
-     "value": "referral_search"},
-    {"label": "Mental Health mentions",
-     "value": "mental_health_search"}
-]
+prompt_template_buttons = yaml_template_collection.create_button_options()
 
 prompt_label_to_keys = defaultdict(lambda: None,
                                    {
