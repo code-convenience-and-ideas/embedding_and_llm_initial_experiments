@@ -1,0 +1,16 @@
+Note that all of below is in CPU + RAM rather than on GPU+VRAM.
+
+# Memory usage of bfloat16 version of Falcon model is quite high.
+~16GB at stable but seems to peak at around 24GB used during the loading phase
+
+# Embedding Model is also of decent size
+
+# Embedding ~100 text chunks of ~512 characters took about 
+3-6 - minutes.
+Our three novels were chunks into ~5K segments and so we'd expect ~5hrs to process those all.
+
+# Document retrieval
+Retrieving top-three matched documents is reasonably fast only taking 1-3s with model in memory.
+
+# RAG based response using Falcon Model in CPU + RAM
+Over 45 minutes to generate a simple response.
